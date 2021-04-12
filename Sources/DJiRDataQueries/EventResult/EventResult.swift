@@ -142,7 +142,7 @@ public struct EventResult {
         }
     }
     
-    public struct Car: Equatable, Hashable {
+    public struct Car: Hashable {
         public let name: String
         public let ID: Int
         public let classID: Int
@@ -173,7 +173,10 @@ public struct EventResult {
         }
     }
     
-    public struct CarClass: Equatable, Hashable {
+    /**
+     Hashable and Equatable are limited to the ID, since the cars in the class are considered static for an ID.
+     */
+    public struct CarClass: Hashable {
         public let name: String
         public let ID: Int
         public let cars: Set<Car>

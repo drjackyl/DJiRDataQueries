@@ -14,8 +14,18 @@ public class DJiRDataQueries {
         }
     }
     
+    public func createSeriesRaceResultsFromJSONData(_ data: Data) throws -> SeriesRaceResults {
+        do {
+            let jsonGeneric = try djIRData.createJSONGenericFromData(data)
+            return try SeriesRaceResults(jsonGeneric: jsonGeneric)
+        } catch let error {
+            throw Error.failedToCreateSeriesRaceResults(underlyingError: error)
+        }
+    }
+    
     public enum Error: Swift.Error {
         case failedToCreateEventResult(underlyingError: Swift.Error)
+        case failedToCreateSeriesRaceResults(underlyingError: Swift.Error)
     }
     
     
