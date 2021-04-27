@@ -5,7 +5,7 @@ public struct SeriesRaceResults {
     
     // MARK: - Raw Data
     
-    public let results: [Result]
+    public let sessions: [SessionInfo]
     
     
     
@@ -23,77 +23,22 @@ public struct SeriesRaceResults {
     
     // MARK: - Types
     
-    public struct Result {
+    public struct SessionInfo {
+        public let data: DJiRData.SeriesRaceResults.SessionInfo
+        
         public let startTime: Date
-        public let carClassID: Int
-        public let trackID: Int
-        public let sessionID: Int
-        public let subSessionID: Int
+        public var carClassID: Int { data.carClassID }
+        public var trackID: Int { data.trackID }
+        public var sessionID: Int { data.sessionID }
+        public var subSessionID: Int { data.subSessionID }
         public let officialSession: Bool
-        public let sizeOfField: Int
-        public let strengthOfField: Int
+        public var sizeOfField: Int { data.sizeOfField }
+        public var strengthOfField: Int { data.strengthOfField }
         
-        // TODO: Create Decoder for decoding dictionaries to models
-        
-        enum CodingKeys: String, CodingKey {
-            case startTime = "1"
-            case carClassID = "2"
-            case trackID = "3"
-            case sessionID = "4"
-            case subSessionID = "5"
-            case officialSession = "6"
-            case sizeOfField = "7"
-            case strengthOfField = "8"
-        }
-        
-        init(result: [String: JSONGenericModel.Value]) throws {
-            guard let startTimeValue = result["1"],
-                  let startTimeIntegerValue = startTimeValue.intValue else {
-                throw Error.failedToConvertValueForKey(key: "1")
-            }
-            startTime = Date(millisecondsSince1970: startTimeIntegerValue)
-            
-            guard let carClassIDValue = result["2"],
-                  let carClassIDIntegerValue = carClassIDValue.intValue else {
-                throw Error.failedToConvertValueForKey(key: "2")
-            }
-            carClassID = carClassIDIntegerValue
-            
-            guard let trackIDValue = result["3"],
-                  let trackIDIntegerValue = trackIDValue.intValue else {
-                throw Error.failedToConvertValueForKey(key: "3")
-            }
-            trackID = trackIDIntegerValue
-            
-            guard let sessionIDValue = result["4"],
-                  let sessionIDIntegerValue = sessionIDValue.intValue else {
-                throw Error.failedToConvertValueForKey(key: "4")
-            }
-            sessionID = sessionIDIntegerValue
-            
-            guard let subSessionIDValue = result["5"],
-                  let subSessionIDIntegerValue = subSessionIDValue.intValue else {
-                throw Error.failedToConvertValueForKey(key: "5")
-            }
-            subSessionID = subSessionIDIntegerValue
-            
-            guard let officialSessionValue = result["6"],
-                  let officialSessionIntegerValue = officialSessionValue.intValue else {
-                throw Error.failedToConvertValueForKey(key: "6")
-            }
-            officialSession = officialSessionIntegerValue != 0
-            
-            guard let sizeOfFieldValue = result["7"],
-                  let sizeOfFieldIntegerValue = sizeOfFieldValue.intValue else {
-                throw Error.failedToConvertValueForKey(key: "7")
-            }
-            sizeOfField = sizeOfFieldIntegerValue
-            
-            guard let strengthOfFieldValue = result["8"],
-                  let strengthOfFieldIntegerValue = strengthOfFieldValue.intValue else {
-                throw Error.failedToConvertValueForKey(key: "8")
-            }
-            strengthOfField = strengthOfFieldIntegerValue
+        init(sessionInfo: DJiRData.SeriesRaceResults.SessionInfo) {
+            data = sessionInfo
+            startTime = Date(millisecondsSince1970: sessionInfo.startTime)
+            officialSession = sessionInfo.officialSession == 1
         }
     }
     
@@ -107,6 +52,7 @@ public struct SeriesRaceResults {
     }
     
     public struct RaceSession {
+        public let sessionID: Int
         public let startTime: Date
         public let isOfficial: Bool
         public let sizeOfField: Int
@@ -122,12 +68,12 @@ public struct SeriesRaceResults {
          - The start-time and whether the session was official is taken from the first result.
          - The overall strength of field is a weighted average according to participation and SoF in each class.
          */
-        init(results: [Result]) {
+        init(results: [SessionInfo]) {
             guard let firstResult = results.first else {
                 self.init(); return
             }
             
-            var subsessionToCarClassResults: [Int: [Result]] = [:]
+            var subsessionToCarClassResults: [Int: [SessionInfo]] = [:]
             results.forEach {
                 subsessionToCarClassResults.appendElement($0, key: $0.subSessionID)
             }
@@ -139,6 +85,7 @@ public struct SeriesRaceResults {
             }
             
             self.init(
+                sessionID: firstResult.sessionID,
                 startTime: firstResult.startTime,
                 isOfficial: firstResult.officialSession,
                 sizeOfField: overallSizeOfField,
@@ -148,12 +95,14 @@ public struct SeriesRaceResults {
         }
         
         private init(
+            sessionID: Int = 0,
             startTime: Date = Date(timeIntervalSince1970: 0),
             isOfficial: Bool = false,
             sizeOfField: Int = 0,
             weightedAverageSoF: Int = 0,
             splits: [Split] = []
         ) {
+            self.sessionID = sessionID
             self.startTime = startTime
             self.isOfficial = isOfficial
             self.sizeOfField = sizeOfField
@@ -175,7 +124,7 @@ public struct SeriesRaceResults {
          
          - Instead of throwing errors, reasonable fallbacks are chosen in case of an empty array as argument.
          */
-        init(results: [Result]) {
+        init(results: [SessionInfo]) {
             guard let firstResult = results.first else {
                 self.init(); return
             }
@@ -228,7 +177,7 @@ public struct SeriesRaceResults {
             hasher.combine(ID)
         }
         
-        init(result: Result) {
+        init(result: SessionInfo) {
             ID = result.carClassID
             sizeOfField = result.sizeOfField
             strengthOfField = result.strengthOfField
@@ -241,23 +190,21 @@ public struct SeriesRaceResults {
     
     // MARK: - Internal API
     
-    init(jsonGeneric: JSONGenericModel) throws {
-        results = try jsonGeneric.d.map {
-            try Result(result: $0)
-        }
+    init(seriesRaceResults: DJiRData.SeriesRaceResults) throws {
+        sessions = seriesRaceResults.sessions.map { SessionInfo(sessionInfo: $0) }
         
-        guard results.count > 0 else {
+        guard sessions.count > 0 else {
             throw Error.resultsAreEmpty
         }
         
-        let sortedWeek = results.sorted { $0.startTime < $1.startTime }
+        let sortedWeek = sessions.sorted { $0.startTime < $1.startTime }
         guard let firstSession = sortedWeek.first,
               let lastSession = sortedWeek.last
         else {
             throw Error.failedToDetermineStartAndEndOfRaceWeek
         }
         
-        guard results.allSatisfy({ $0.trackID == firstSession.trackID }) else {
+        guard sessions.allSatisfy({ $0.trackID == firstSession.trackID }) else {
             throw Error.assertionFailed(description: "All sessions are expected to have the same track-ID!")
         }
         trackID = firstSession.trackID
@@ -266,10 +213,10 @@ public struct SeriesRaceResults {
         let endOfWeek = lastSession.startTime.endOfDay()
         raceWeek = startOfWeek...endOfWeek
         
-        raceDays = SeriesRaceResults.createRaceDaysFromResults(results)
+        raceDays = SeriesRaceResults.createRaceDaysFromResults(sessions)
     }
     
-    private static func createRaceDaysFromResults(_ results: [Result]) -> [RaceDay] {
+    private static func createRaceDaysFromResults(_ results: [SessionInfo]) -> [RaceDay] {
         let raceDayToSessionIDs = createRaceDayToSessionIDs(results)
         
         return raceDayToSessionIDs.keys.map { raceDayDate -> RaceDay in
@@ -279,7 +226,7 @@ public struct SeriesRaceResults {
         }.sorted { $0.date < $1.date }
     }
     
-    private static func createRaceDayToSessionIDs(_ results: [Result]) -> [Date: Set<Int>] {
+    private static func createRaceDayToSessionIDs(_ results: [SessionInfo]) -> [Date: Set<Int>] {
         var raceDayToSessionIDs: [Date: Set<Int>] = [:]
         results.forEach {
             let raceDay = $0.startTime.startOfDay()
@@ -288,7 +235,7 @@ public struct SeriesRaceResults {
         return raceDayToSessionIDs
     }
     
-    private static func createRaceSessionsForSessionIDs(results: [Result], sessionIDs: Set<Int>) -> [RaceSession] {
+    private static func createRaceSessionsForSessionIDs(results: [SessionInfo], sessionIDs: Set<Int>) -> [RaceSession] {
         return sessionIDs.map { sessionID -> RaceSession in
             let subSessions = results.filter { result in result.sessionID == sessionID }
             return RaceSession(results: subSessions)

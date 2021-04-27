@@ -16,8 +16,8 @@ public class DJiRDataQueries {
     
     public func createSeriesRaceResultsFromJSONData(_ data: Data) throws -> SeriesRaceResults {
         do {
-            let jsonGeneric = try djIRData.createJSONGenericFromData(data)
-            return try SeriesRaceResults(jsonGeneric: jsonGeneric)
+            let seriesRaceResults = try djIRData.createSeriesRaceResultsFromData(data)
+            return try SeriesRaceResults(seriesRaceResults: seriesRaceResults)
         } catch let error {
             throw Error.failedToCreateSeriesRaceResults(underlyingError: error)
         }
@@ -34,5 +34,5 @@ public class DJiRDataQueries {
     
     // MARK: - Private
     
-    private let djIRData: DJiRData = .init()
+    private let djIRData: DJiRDataAPI = .init()
 }

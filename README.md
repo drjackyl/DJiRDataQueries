@@ -5,6 +5,7 @@ DrJackyl's Swift Package for queries on iRacing-Data provides processing and que
 ## Supported Data
 
 * Event Result in CSV-format.
+* Series Race Results (the list of sessions and subsessions on a series' section).
 
 ## Examples
 
@@ -23,6 +24,10 @@ do {
     print(error)
 }
 ```
+
+## A Remark on the Unit Tests
+
+The unit-tests are based on "real data", rather than constructed data, to identify specialties in the raw data retrieved from iRacing itself.
 
 ## Future
 
