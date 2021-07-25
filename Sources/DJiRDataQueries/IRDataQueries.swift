@@ -1,13 +1,13 @@
 import Foundation
 import DJiRData
 
-public class DJiRDataQueries {
+public class IRDataQueries {
     
     public init() {}
     
     public func createEventResultFromCSVData(_ data: Data) throws -> EventResult {
         do {
-            let csvEventResult = try djIRData.createCSVEventResultFromData(data)
+            let csvEventResult = try iRData.createCSVEventResultFromData(data)
             return try EventResult(csvEventResult: csvEventResult)
         } catch let error {
             throw Error.failedToCreateEventResult(underlyingError: error)
@@ -16,7 +16,7 @@ public class DJiRDataQueries {
     
     public func createSeriesRaceResultsFromJSONData(_ data: Data) throws -> SeriesRaceResults {
         do {
-            let seriesRaceResults = try djIRData.createSeriesRaceResultsFromData(data)
+            let seriesRaceResults = try iRData.createSeriesRaceResultsFromData(data)
             return try SeriesRaceResults(seriesRaceResults: seriesRaceResults)
         } catch let error {
             throw Error.failedToCreateSeriesRaceResults(underlyingError: error)
@@ -34,5 +34,5 @@ public class DJiRDataQueries {
     
     // MARK: - Private
     
-    private let djIRData: DJiRDataAPI = .init()
+    private let iRData: IRData = .init()
 }

@@ -13,7 +13,7 @@ class SeriesRaceResultsTests: XCTestCase {
     }()
 
     func testSeriesRaceResults() throws {
-        let results = try DJiRDataQueries().createSeriesRaceResultsFromJSONData(data)
+        let results = try IRDataQueries().createSeriesRaceResultsFromJSONData(data)
         
         XCTAssertEqual(results.sessions.count, 640)
         XCTAssertEqual(results.sessions[0].startTime, Date(year: 2021, month: 3, day: 18, hour: 16, minute: 45, second: 0))
@@ -27,20 +27,20 @@ class SeriesRaceResultsTests: XCTestCase {
     }
     
     func testSeriesRaceResults_RaceWeek() throws {
-        let results = try DJiRDataQueries().createSeriesRaceResultsFromJSONData(data)
+        let results = try IRDataQueries().createSeriesRaceResultsFromJSONData(data)
         
         XCTAssertEqual(results.raceWeek.lowerBound, Date(year: 2021, month: 3, day: 16, hour: 0, minute: 0, second: 0))
         XCTAssertEqual(results.raceWeek.upperBound, Date(year: 2021, month: 3, day: 22, hour: 23, minute: 59, second: 59, milliSecond: 999))
     }
 
     func testSeriesRaceResults_TrackID() throws {
-        let results = try DJiRDataQueries().createSeriesRaceResultsFromJSONData(data)
+        let results = try IRDataQueries().createSeriesRaceResultsFromJSONData(data)
         
         XCTAssertEqual(results.trackID, 250)
     }
     
     func testSeriesRaceResults_RaceDays() throws {
-        let results = try DJiRDataQueries().createSeriesRaceResultsFromJSONData(data)
+        let results = try IRDataQueries().createSeriesRaceResultsFromJSONData(data)
         
         XCTAssertEqual(results.raceDays.count, 7)
         guard results.raceDays.count == 7 else { return }
@@ -82,7 +82,7 @@ class SeriesRaceResultsTests: XCTestCase {
     }
     
     func testSeriesRaceResults_RaceSession() throws {
-        let results = try DJiRDataQueries().createSeriesRaceResultsFromJSONData(data)
+        let results = try IRDataQueries().createSeriesRaceResultsFromJSONData(data)
         
         guard let session = results.raceDays.last?.sessions.first else {
             XCTFail("Expected session was not present in data"); return
@@ -109,7 +109,7 @@ class SeriesRaceResultsTests: XCTestCase {
     }
     
     func testSeriesRaceResults_Split() throws {
-        let results = try DJiRDataQueries().createSeriesRaceResultsFromJSONData(data)
+        let results = try IRDataQueries().createSeriesRaceResultsFromJSONData(data)
         
         guard let split = results.raceDays.last?.sessions.first?.splits.first else {
             XCTFail("Expected split was not present in data"); return
@@ -130,7 +130,7 @@ class SeriesRaceResultsTests: XCTestCase {
     }
     
     func testSeriesRaceResults_CarClass() throws {
-        let results = try DJiRDataQueries().createSeriesRaceResultsFromJSONData(data)
+        let results = try IRDataQueries().createSeriesRaceResultsFromJSONData(data)
         
         guard let split = results.raceDays.last?.sessions.first?.splits.first else {
             XCTFail("Expected split was not present in data"); return

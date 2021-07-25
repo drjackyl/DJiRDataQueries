@@ -14,7 +14,7 @@ class DJiRDataQueriesEventResultTests: XCTestCase {
             .load()
         
         do {
-            let eventResult = try DJiRDataQueries().createEventResultFromCSVData(data)
+            let eventResult = try IRDataQueries().createEventResultFromCSVData(data)
             XCTAssertEqual(eventResult.summary.startTime, Date(year: 2021, month: 3, day: 8, hour: 0, minute: 45, second: 0))
             XCTAssertNil(eventResult.results[0].fastestLapTime)
         } catch let error {
@@ -29,7 +29,7 @@ class DJiRDataQueriesEventResultTests: XCTestCase {
             .load()
         
         do {
-            let eventResult = try DJiRDataQueries().createEventResultFromCSVData(data)
+            let eventResult = try IRDataQueries().createEventResultFromCSVData(data)
             XCTAssertEqual(eventResult.summary.startTime, Date(year: 2021, month: 3, day: 8, hour: 0, minute: 45, second: 0))
             XCTAssertEqual(eventResult.results[1].interval.sameLap, -0.012)
             XCTAssertEqual(eventResult.results[1].interval.lapsDown, 0)
@@ -46,7 +46,7 @@ class DJiRDataQueriesEventResultTests: XCTestCase {
             .load()
         
         do {
-            let eventResult = try DJiRDataQueries().createEventResultFromCSVData(data)
+            let eventResult = try IRDataQueries().createEventResultFromCSVData(data)
             XCTAssertEqual(eventResult.summary.startTime, Date(year: 2021, month: 3, day: 8, hour: 0, minute: 45, second: 0))
             XCTAssertEqual(eventResult.results[2].interval.sameLap, -0.189)
             XCTAssertEqual(eventResult.results[2].interval.lapsDown, 0)
@@ -63,7 +63,7 @@ class DJiRDataQueriesEventResultTests: XCTestCase {
             .load()
         
         do {
-            _ = try DJiRDataQueries().createEventResultFromCSVData(data)
+            _ = try IRDataQueries().createEventResultFromCSVData(data)
         } catch let error {
             XCTFail("An error was thrown: \(error)")
         }
@@ -76,7 +76,7 @@ class DJiRDataQueriesEventResultTests: XCTestCase {
             .load()
         
         do {
-            _ = try DJiRDataQueries().createEventResultFromCSVData(data)
+            _ = try IRDataQueries().createEventResultFromCSVData(data)
         } catch let error {
             XCTFail("An error was thrown: \(error)")
         }
@@ -89,7 +89,7 @@ class DJiRDataQueriesEventResultTests: XCTestCase {
             .load()
         
         do {
-            _ = try DJiRDataQueries().createEventResultFromCSVData(data)
+            _ = try IRDataQueries().createEventResultFromCSVData(data)
         } catch let error {
             XCTFail("An error was thrown: \(error)")
         }
@@ -102,7 +102,7 @@ class DJiRDataQueriesEventResultTests: XCTestCase {
             .load()
         
         do {
-            _ = try DJiRDataQueries().createEventResultFromCSVData(data)
+            _ = try IRDataQueries().createEventResultFromCSVData(data)
         } catch let error {
             XCTFail("An error was thrown: \(error)")
         }
@@ -115,7 +115,7 @@ class DJiRDataQueriesEventResultTests: XCTestCase {
             .load()
         
         do {
-            _ = try DJiRDataQueries().createEventResultFromCSVData(data)
+            _ = try IRDataQueries().createEventResultFromCSVData(data)
         } catch let error {
             XCTFail("An error was thrown: \(error)")
         }
@@ -128,7 +128,7 @@ class DJiRDataQueriesEventResultTests: XCTestCase {
             .load()
         
         do {
-            _ = try DJiRDataQueries().createEventResultFromCSVData(data)
+            _ = try IRDataQueries().createEventResultFromCSVData(data)
         } catch let error {
             XCTFail("An error was thrown: \(error)")
         }
@@ -141,7 +141,7 @@ class DJiRDataQueriesEventResultTests: XCTestCase {
             .load()
         
         do {
-            _ = try DJiRDataQueries().createEventResultFromCSVData(data)
+            _ = try IRDataQueries().createEventResultFromCSVData(data)
         } catch let error {
             XCTFail("An error was thrown: \(error)")
         }
@@ -154,7 +154,7 @@ class DJiRDataQueriesEventResultTests: XCTestCase {
             .load()
         
         do {
-            _ = try DJiRDataQueries().createEventResultFromCSVData(data)
+            _ = try IRDataQueries().createEventResultFromCSVData(data)
         } catch let error {
             XCTFail("An error was thrown: \(error)")
         }
@@ -167,7 +167,7 @@ class DJiRDataQueriesEventResultTests: XCTestCase {
             .load()
         
         do {
-            let eventResult = try DJiRDataQueries().createEventResultFromCSVData(data)
+            let eventResult = try IRDataQueries().createEventResultFromCSVData(data)
             XCTAssertEqual(eventResult.results[0].interval.sameLap, 0)
             XCTAssertEqual(eventResult.results[0].interval.lapsDown, 0)
             XCTAssertEqual(eventResult.results[0].averageLapTime, 3 * 60 + 15.922)
@@ -189,7 +189,7 @@ class DJiRDataQueriesEventResultTests: XCTestCase {
             .load()
         
         do {
-            _ = try DJiRDataQueries().createEventResultFromCSVData(data)
+            _ = try IRDataQueries().createEventResultFromCSVData(data)
         } catch let error {
             XCTFail("An error was thrown: \(error)")
         }
@@ -202,7 +202,7 @@ class DJiRDataQueriesEventResultTests: XCTestCase {
             .load()
         
         do {
-            _ = try DJiRDataQueries().createEventResultFromCSVData(data)
+            _ = try IRDataQueries().createEventResultFromCSVData(data)
         } catch let error {
             XCTFail("An error was thrown: \(error)")
         }
@@ -215,7 +215,7 @@ class DJiRDataQueriesEventResultTests: XCTestCase {
             .load()
         
         do {
-            _ = try DJiRDataQueries().createEventResultFromCSVData(data)
+            _ = try IRDataQueries().createEventResultFromCSVData(data)
         } catch let error {
             XCTFail("An error was thrown: \(error)")
         }
@@ -224,8 +224,8 @@ class DJiRDataQueriesEventResultTests: XCTestCase {
     // MARK: - Erronous Data
     
     func testEmptyData() {
-        XCTAssertThrowsError(try DJiRDataQueries().createEventResultFromCSVData(Data())) { error in
-            guard case DJiRDataQueries.Error.failedToCreateEventResult = error else {
+        XCTAssertThrowsError(try IRDataQueries().createEventResultFromCSVData(Data())) { error in
+            guard case IRDataQueries.Error.failedToCreateEventResult = error else {
                 XCTFail("Unexpected error was thrown: \(error)"); return
             }
         }
@@ -234,8 +234,8 @@ class DJiRDataQueriesEventResultTests: XCTestCase {
     func testDividerOnly() {
         let data = "\n\n".data(using: .ascii)!
         
-        XCTAssertThrowsError(try DJiRDataQueries().createEventResultFromCSVData(data)) { error in
-            guard case DJiRDataQueries.Error.failedToCreateEventResult = error else {
+        XCTAssertThrowsError(try IRDataQueries().createEventResultFromCSVData(data)) { error in
+            guard case IRDataQueries.Error.failedToCreateEventResult = error else {
                 XCTFail("Unexpected error was thrown: \(error)"); return
             }
         }
@@ -244,8 +244,8 @@ class DJiRDataQueriesEventResultTests: XCTestCase {
     func testInvalidSummaryData() {
         let data = DJiRDataTestResources.CSVEventResult.InvalidSummary.load()
         
-        XCTAssertThrowsError(try DJiRDataQueries().createEventResultFromCSVData(data)) { error in
-            guard case DJiRDataQueries.Error.failedToCreateEventResult = error else {
+        XCTAssertThrowsError(try IRDataQueries().createEventResultFromCSVData(data)) { error in
+            guard case IRDataQueries.Error.failedToCreateEventResult = error else {
                 XCTFail("Unexpected error was thrown: \(error)"); return
             }
         }
@@ -254,8 +254,8 @@ class DJiRDataQueriesEventResultTests: XCTestCase {
     func testInvalidResultData() {
         let data = DJiRDataTestResources.CSVEventResult.InvalidResults.load()
         
-        XCTAssertThrowsError(try DJiRDataQueries().createEventResultFromCSVData(data)) { error in
-            guard case DJiRDataQueries.Error.failedToCreateEventResult = error else {
+        XCTAssertThrowsError(try IRDataQueries().createEventResultFromCSVData(data)) { error in
+            guard case IRDataQueries.Error.failedToCreateEventResult = error else {
                 XCTFail("Unexpected error was thrown: \(error)"); return
             }
         }

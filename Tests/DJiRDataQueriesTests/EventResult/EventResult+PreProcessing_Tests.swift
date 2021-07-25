@@ -12,7 +12,7 @@ class EventResultPreProcessingTests: XCTestCase {
             .Road_NoTeam_SingleClass_Race
             .load()
         
-        let eventResult = try! DJiRDataQueries().createEventResultFromCSVData(data)
+        let eventResult = try! IRDataQueries().createEventResultFromCSVData(data)
         
         XCTAssertEqual(eventResult.resultsOfDrivers.count, eventResult.results.count)
         XCTAssertTrue(eventResult.resultsOfDrivers.count > 0)
@@ -26,7 +26,7 @@ class EventResultPreProcessingTests: XCTestCase {
             .Road_Team_MultiClass_Race
             .load()
         
-        let eventResult = try! DJiRDataQueries().createEventResultFromCSVData(data)
+        let eventResult = try! IRDataQueries().createEventResultFromCSVData(data)
         
         XCTAssertEqual(eventResult.resultsOfDrivers.count + eventResult.resultsOfTeams.count, eventResult.results.count)
         XCTAssertTrue(eventResult.resultsOfDrivers.count > 0)
@@ -46,7 +46,7 @@ class EventResultPreProcessingTests: XCTestCase {
             .Road_Team_MultiClass_Race
             .load()
         
-        let eventResult = try! DJiRDataQueries().createEventResultFromCSVData(data)
+        let eventResult = try! IRDataQueries().createEventResultFromCSVData(data)
         
         let expectedCarClasses: Set<EventResult.CarClass> = [
             EventResult.CarClass(
@@ -90,7 +90,7 @@ class EventResultPreProcessingTests: XCTestCase {
         let expectedCars: Set<EventResult.Car> = [EventResult.Car(name: "Porsche 911 GT3 Cup (991)", ID: 88, classID: 95)]
         let expectedCarClasses: Set<EventResult.CarClass> = [EventResult.CarClass(name: "Porsche 911 GT3 Cup", ID: 95, cars: expectedCars)]
         
-        let eventResult = try! DJiRDataQueries().createEventResultFromCSVData(data)
+        let eventResult = try! IRDataQueries().createEventResultFromCSVData(data)
         
         XCTAssertEqual(eventResult.cars, expectedCars)
         XCTAssertEqual(eventResult.carClasses, expectedCarClasses)
@@ -120,7 +120,7 @@ class EventResultPreProcessingTests: XCTestCase {
         let expectedCarClasses: Set<EventResult.CarClass> = [lmp2, gtlm, gtd]
         
         
-        let eventResult = try! DJiRDataQueries().createEventResultFromCSVData(data)
+        let eventResult = try! IRDataQueries().createEventResultFromCSVData(data)
         
         
         XCTAssertEqual(eventResult.cars, expectedCars)

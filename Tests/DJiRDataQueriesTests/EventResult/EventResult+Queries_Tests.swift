@@ -26,7 +26,7 @@ class EventResultQueriesTests: XCTestCase {
             .Road_Team_MultiClass_Race
             .load()
         
-        let eventResult = try! DJiRDataQueries().createEventResultFromCSVData(data)
+        let eventResult = try! IRDataQueries().createEventResultFromCSVData(data)
         
         let driver = eventResult.getDriver(_driver1Name)
         
@@ -39,7 +39,7 @@ class EventResultQueriesTests: XCTestCase {
             .Road_Team_MultiClass_Race
             .load()
         
-        let eventResult = try! DJiRDataQueries().createEventResultFromCSVData(data)
+        let eventResult = try! IRDataQueries().createEventResultFromCSVData(data)
         
         let driver = eventResult.getDriver(_teamName)
         
@@ -52,7 +52,7 @@ class EventResultQueriesTests: XCTestCase {
             .Road_Team_MultiClass_Race
             .load()
         
-        let eventResult = try! DJiRDataQueries().createEventResultFromCSVData(data)
+        let eventResult = try! IRDataQueries().createEventResultFromCSVData(data)
         
         let team = eventResult.resultsOfTeams.first { $0.name == _teamName }!
         let drivers = eventResult.getDriversOfTeam(team)
@@ -68,7 +68,7 @@ class EventResultQueriesTests: XCTestCase {
             .Road_Team_MultiClass_Race
             .load()
         
-        let eventResult = try! DJiRDataQueries().createEventResultFromCSVData(data)
+        let eventResult = try! IRDataQueries().createEventResultFromCSVData(data)
         
         let driver = eventResult.resultsOfDrivers.first!
         let drivers = eventResult.getDriversOfTeam(driver)
@@ -83,7 +83,7 @@ class EventResultQueriesTests: XCTestCase {
             .Road_Team_MultiClass_Race
             .load()
         
-        let eventResult = try! DJiRDataQueries().createEventResultFromCSVData(data)
+        let eventResult = try! IRDataQueries().createEventResultFromCSVData(data)
         
         let lmp1Drivers = eventResult.getDriversInClass(_lmp1Class)
         XCTAssertEqual(lmp1Drivers.count, 30)
@@ -101,7 +101,7 @@ class EventResultQueriesTests: XCTestCase {
             .Road_Team_MultiClass_Race
             .load()
         
-        let eventResult = try! DJiRDataQueries().createEventResultFromCSVData(data)
+        let eventResult = try! IRDataQueries().createEventResultFromCSVData(data)
         
         let driver = eventResult.getDriverOfFastestLap()
         
@@ -115,7 +115,7 @@ class EventResultQueriesTests: XCTestCase {
             .Road_Team_MultiClass_Race
             .load()
         
-        let eventResult = try! DJiRDataQueries().createEventResultFromCSVData(data)
+        let eventResult = try! IRDataQueries().createEventResultFromCSVData(data)
         XCTAssertEqual(eventResult.carClasses.count, 3)
         let fastestLaps = eventResult.carClasses.compactMap { eventResult.getDriverOfFastestLap(inClass: $0) }
         
@@ -141,7 +141,7 @@ class EventResultQueriesTests: XCTestCase {
             .Road_Team_MultiClass_Race
             .load()
         
-        let eventResult = try! DJiRDataQueries().createEventResultFromCSVData(data)
+        let eventResult = try! IRDataQueries().createEventResultFromCSVData(data)
         
         let team = eventResult.getTeam(_teamName)
         
@@ -154,7 +154,7 @@ class EventResultQueriesTests: XCTestCase {
             .Road_Team_MultiClass_Race
             .load()
         
-        let eventResult = try! DJiRDataQueries().createEventResultFromCSVData(data)
+        let eventResult = try! IRDataQueries().createEventResultFromCSVData(data)
         
         let driver = eventResult.resultsOfDrivers.first { $0.name == _driver1Name }!
         let team = eventResult.getTeamOfDriver(driver)
@@ -170,7 +170,7 @@ class EventResultQueriesTests: XCTestCase {
             .Road_Team_MultiClass_Race
             .load()
         
-        let eventResult = try! DJiRDataQueries().createEventResultFromCSVData(data)
+        let eventResult = try! IRDataQueries().createEventResultFromCSVData(data)
         
         let teamEntry = eventResult.resultsOfTeams.first { $0.name == _teamName }!
         let team = eventResult.getTeamOfDriver(teamEntry)
@@ -185,7 +185,7 @@ class EventResultQueriesTests: XCTestCase {
             .Road_Team_MultiClass_Race
             .load()
         
-        let eventResult = try! DJiRDataQueries().createEventResultFromCSVData(data)
+        let eventResult = try! IRDataQueries().createEventResultFromCSVData(data)
         
         let team = eventResult.getTeamOfDriver(_driver1Name)
         
@@ -198,7 +198,7 @@ class EventResultQueriesTests: XCTestCase {
             .Road_Team_MultiClass_Race
             .load()
         
-        let eventResult = try! DJiRDataQueries().createEventResultFromCSVData(data)
+        let eventResult = try! IRDataQueries().createEventResultFromCSVData(data)
         
         let lmp1Teams = eventResult.getTeamsInClass(_lmp1Class)
         XCTAssertEqual(lmp1Teams.count, 15)
@@ -222,7 +222,7 @@ class EventResultQueriesTests: XCTestCase {
             .Road_Team_MultiClass_Race
             .load()
         
-        let eventResult = try! DJiRDataQueries().createEventResultFromCSVData(data)
+        let eventResult = try! IRDataQueries().createEventResultFromCSVData(data)
         
         let carClass = eventResult.getCarClassOfDriver(_driver1Name)
         
@@ -235,7 +235,7 @@ class EventResultQueriesTests: XCTestCase {
             .Road_Team_MultiClass_Race
             .load()
         
-        let eventResult = try! DJiRDataQueries().createEventResultFromCSVData(data)
+        let eventResult = try! IRDataQueries().createEventResultFromCSVData(data)
         
         let lmp1StartPos = eventResult.getStartPositionOfTeamInItsClass(_teamName)
         let lmp2StartPos = eventResult.getStartPositionOfTeamInItsClass("UNIQUE Simracing BLUE")
@@ -252,7 +252,7 @@ class EventResultQueriesTests: XCTestCase {
             .Road_Team_MultiClass_Race
             .load()
         
-        let eventResult = try! DJiRDataQueries().createEventResultFromCSVData(data)
+        let eventResult = try! IRDataQueries().createEventResultFromCSVData(data)
         
         let lmp1StartPos = eventResult.getStartPositionOfDriversTeamInItsClass(_driver1Name)
         let lmp2StartPos = eventResult.getStartPositionOfDriversTeamInItsClass("René Aures")
