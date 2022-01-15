@@ -1,6 +1,6 @@
 # DJiRDataQueries
 
-DrJackyl's Swift Package for queries on iRacing-Data provides processing and queries for data of [iRacing](https://www.iracing.com). Its scope is to make the data more usable.
+DrJackyl's Swift Package for queries on iRacing-Data provides processing and queries for data of [iRacing](https://www.iracing.com). Its scope is to make the data more usable, but requires Apple's Foundation to be used.
 
 ## Supported Data
 
@@ -27,8 +27,18 @@ do {
 
 ## A Remark on the Unit Tests
 
-The unit-tests are based on "real data", rather than constructed data, to identify specialties in the raw data retrieved from iRacing itself.
+A good amount of previous unit tests, which tested processing with real data, were removed, because the "real data" disclosed data of members, like real names and customer-IDs, which would otherwise only be visible to members of the service.
+
+Remaining unit tests cover logic or document resolution of bugs in the models.
 
 ## Future
 
 * Queries on all data provided by DJiRData.
+
+## Breaking Changes
+
+### &lt; v0.3
+
+The test-resources (DJiRDataTestResources) for testing decoding of real data have been removed, because they exposed member-data, like real names and customer-IDs, wich are otherwise only visible to members.
+
+Hence, the respective unit-tests have been removed as well. I now set this up locally on my machine, where I run the tests.
